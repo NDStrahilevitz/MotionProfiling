@@ -163,18 +163,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MotionProfile.h" />
+    <ClInclude Include="include\MotionProfile.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Setpoint.h" />
-    <ClInclude Include="Waypoint.h" />
+    <ClInclude Include="include\Setpoint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MotionProfile.cpp" />
+    <ClCompile Include="src\MotionProfile.cpp" />
     <ClCompile Include="MotionProfiling.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Setpoint.cpp" />
-    <ClCompile Include="Waypoint.cpp" />
+    <ClCompile Include="src\Setpoint.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

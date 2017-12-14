@@ -24,13 +24,10 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MotionProfile.h">
+    <ClInclude Include="include\MotionProfile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Setpoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Waypoint.h">
+    <ClInclude Include="include\Setpoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,13 +38,10 @@
     <ClCompile Include="MotionProfiling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MotionProfile.cpp">
+    <ClCompile Include="src\Setpoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Setpoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Waypoint.cpp">
+    <ClCompile Include="src\MotionProfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
