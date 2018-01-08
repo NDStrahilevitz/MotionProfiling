@@ -71,23 +71,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate\</IntDir>
+    <TargetName>$(ProjectName)\src</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate\</IntDir>
+    <TargetName>$(ProjectName)\src</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate\</IntDir>
+    <TargetName>$(ProjectName)\src</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\bin\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(PlatformTarget)\intermediate\</IntDir>
+    <TargetName>$(ProjectName)\src</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MotionProfile.cpp" />
-    <ClCompile Include="MotionProfiling.cpp" />
+    <ClCompile Include="src\MotionProfiling.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="src\Setpoint.cpp" />
   </ItemGroup>

@@ -2,10 +2,9 @@
 
 MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config) :
 	_start(start), _end(end), _config(config) {
-	_setpoints.reserve(200);
 }
 
-const std::vector<Setpoint>& MotionProfile::GetSetpoints() const{
+const std::forward_list<Setpoint>& MotionProfile::GetSetpoints() const{
 	return _setpoints;
 }
 
@@ -33,13 +32,13 @@ void MotionProfile::Generate() {
 		currTime += dt;
 		distCovered += currVel*dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_back(newSetpoint);
+		_setpoints.emplace_front(newSetpoint);
 	}
 	while (fabs((goalDist-deaccelDist)-distCovered) > _config._tolerance) {
 		currTime += dt;
 		distCovered += currVel*dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_back(newSetpoint);
+		_setpoints.emplace_front(newSetpoint);
 	}
 	//now start deaccelerating
 	while (fabs(goalDist - distCovered) > _config._tolerance) {
@@ -47,8 +46,9 @@ void MotionProfile::Generate() {
 		currVel -= maxAcc;
 		distCovered += currVel*dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_back(newSetpoint);
+		_setpoints.emplace_front(newSetpoint);
 	}
+	_setpoints.reverse(); //reverse linked list so it will be in order
 }
 
 

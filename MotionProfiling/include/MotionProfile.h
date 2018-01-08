@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <forward_list>
 #include "Setpoint.h"
 
 struct MotionProfileConfig {
@@ -17,10 +18,10 @@ class MotionProfile
 private:
 	MotionProfileConfig _config;
 	Setpoint _start, _end;
-	std::vector<Setpoint> _setpoints;
+	std::forward_list<Setpoint> _setpoints;
 	
 public:
-	const std::vector<Setpoint>& GetSetpoints() const;
+	const std::forward_list<Setpoint>& GetSetpoints() const;
 	MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config);
 	void Generate();
 };

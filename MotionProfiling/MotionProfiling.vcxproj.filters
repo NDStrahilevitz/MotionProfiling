@@ -35,13 +35,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MotionProfiling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Setpoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MotionProfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MotionProfiling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
