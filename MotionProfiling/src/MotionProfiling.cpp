@@ -3,14 +3,14 @@
 
 #include <forward_list>
 #include <matplotlibcpp.h>
-
+#include "../include/MotionProfile.h"
 namespace plt = matplotlibcpp;
 
 int main()
 {
 	Setpoint start(0, 0, 0);
-	Setpoint end(1, 5, 0);
-	MotionProfile profile(start, end, MotionProfileConfig(0.05,	1.2, 10, 0.1));
+	Setpoint end(7.5, 50, 0);
+	MotionProfile profile(start, end, MotionProfileConfig(0.02,	5, 10, 0.1));
 	profile.Generate();
 	std::forward_list<Setpoint> setpoints = profile.GetSetpoints();
 	std::vector<float> time;
