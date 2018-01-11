@@ -42,14 +42,36 @@ void MotionProfile::Generate() {
 	if (cruiseDist == 0) {	
 		//Setpoint deAccel(toCruise.GetTime() + accelTime, toCruise.GetPos() + accelDist, 0);	
 		m_parts.push_back(MotionPart(toCruise, m_end));
+		/*float deAccel = fabs(deltaVEnd / goalTime);
+		if (deAccel > maxAcc) {
+			deAccel = -maxAcc;
+			float deAccelInterval = deltaVEnd / deAccel;
+			float deAccelTime = deAccelInterval + cruiseTime;
+			float deAccelEndPos = endCruisePos + (deAccelInterval * deltaVEnd / 2);
+			Setpoint end(deAccelTime, deAccelEndPos, m_end.GetVelocity());
+			m_parts.push_back(MotionPart(cruiseEnd, end));
+		}*/
 	}
 	//trapezoidal
 	else {
-		float cruiseTime = cruiseDist / cruiseVel + timeToCruise; //this is time coordinate, not the time while cruising
+		float cruiseInterval = cruiseDist / cruiseVel;
+		float cruiseTime = cruiseInterval + timeToCruise; //this is a time coordinate, not the cruising interval
 		float endCruisePos = cruiseDist + accelPos;
 		Setpoint cruiseEnd(cruiseTime, endCruisePos, cruiseVel);
 		m_parts.push_back(MotionPart(toCruise, cruiseEnd));
-		m_parts.push_back(MotionPart(cruiseEnd, m_end));
+
+		float deAccel = fabs(deltaVEnd / (goalTime - cruiseTime));
+		if (deAccel > maxAcc) {
+			deAccel = -maxAcc;
+			float deAccelInterval = deltaVEnd / deAccel;
+			float deAccelTime = deAccelInterval + cruiseTime;
+			float deAccelEndPos = endCruisePos + (deAccelInterval * deltaVEnd / 2);
+			Setpoint end(deAccelTime, deAccelEndPos, m_end.GetVelocity());
+			m_parts.push_back(MotionPart(cruiseEnd, end));
+		}
+		else {
+			m_parts.push_back(MotionPart(cruiseEnd, m_end));
+		}
 	}
 }
 

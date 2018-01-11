@@ -5,11 +5,16 @@
 #include "../include/matplotlibcpp.h"
 #include "../include/MotionProfile.h"
 namespace plt = matplotlibcpp;
-
+/*
+TODO:
+1. improve cruise velocity decision
+2. correct generation for non zero start velocities
+3. check generation with non zero end velocity (after fixing 2)
+*/
 int main()
 {
-	Setpoint start(0, 0, 0);
-	Setpoint end(2, 6, 0);
+	Setpoint start(0, 0, 5);
+	Setpoint end(2, 20, 0);
 	MotionProfile profile(start, end, MotionProfileConfig(0.02,	5, 10, 0.05));
 	profile.Generate();
 	std::vector<MotionPart> setpoints = profile.GetParts();
