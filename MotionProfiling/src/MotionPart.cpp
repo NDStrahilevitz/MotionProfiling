@@ -1,7 +1,8 @@
 #include "../include/MotionPart.h"
 
 MotionPart::MotionPart(const Setpoint& start, const Setpoint& end) : m_start(start), m_end(end), 
-m_distance(m_end.GetPos() - m_start.GetPos()), m_time(m_end.GetTime() - m_start.GetTime()), m_acc(m_distance/(m_time*m_time))
+m_distance(m_end.GetPos() - m_start.GetPos()), m_time(m_end.GetTime() - m_start.GetTime()), 
+m_acc((m_end.GetVelocity() - m_start.GetVelocity()) / m_time)
 {}
 
 const bool MotionPart::IsValid() const {
@@ -16,6 +17,14 @@ const bool MotionPart::ContainsPos(float pos) const {
 	if (m_distance < 0)
 		return pos >= m_end.GetPos() && pos <= m_start.GetPos();
 	return pos >= m_start.GetPos() && pos <= m_end.GetPos();
+}
+
+const Setpoint& MotionPart::GetStart() const {
+	return m_start;
+}
+
+const Setpoint& MotionPart::GetEnd() const {
+	return m_end;
 }
 
 const std::unique_ptr<Setpoint>& MotionPart::FindSetpoint(float t) const {

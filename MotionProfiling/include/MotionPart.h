@@ -25,6 +25,9 @@ public:
 	const bool ContainsTime(float t) const;
 	const bool ContainsPos(float pos) const;
 	
+	const Setpoint& GetStart() const;
+	const Setpoint& GetEnd() const;
+
 	//returns null if setpoint if time is not contained
 	const std::unique_ptr<Setpoint>& FindSetpoint(float t) const;
 };

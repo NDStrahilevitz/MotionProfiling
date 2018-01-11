@@ -19,11 +19,13 @@ class MotionProfile
 private:
 	MotionProfileConfig m_config;
 	Setpoint m_start, m_end;
-	std::forward_list<Setpoint> m_setpoints;
-	
+	std::vector<MotionPart> m_parts;
 	
 public:
-	const std::forward_list<Setpoint>& GetSetpoints() const;
+
+	const Setpoint& GetStart() const;
+	const Setpoint& GetEnd() const;
+	const std::vector<MotionPart>& GetParts() const;
 	MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config);
 	void Generate();
 };

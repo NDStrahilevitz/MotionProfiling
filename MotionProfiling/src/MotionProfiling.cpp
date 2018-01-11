@@ -9,22 +9,27 @@ namespace plt = matplotlibcpp;
 int main()
 {
 	Setpoint start(0, 0, 0);
-	Setpoint end(3, 4, 0);
+	Setpoint end(2, 6, 0);
 	MotionProfile profile(start, end, MotionProfileConfig(0.02,	5, 10, 0.05));
 	profile.Generate();
-	std::forward_list<Setpoint> setpoints = profile.GetSetpoints();
+	std::vector<MotionPart> setpoints = profile.GetParts();
 	std::vector<float> time;
 	std::vector<float> vel;
 	time.reserve(200);
 	vel.reserve(200);
-	for each (Setpoint sp in setpoints)
+	for each (MotionPart sp in setpoints)
 	{
-		time.push_back(sp.GetTime());
-		vel.push_back(sp.GetVelocity());
+		time.push_back(sp.GetStart().GetTime());
+		time.push_back(sp.GetEnd().GetTime());
+		vel.push_back(sp.GetStart().GetVelocity());
+		vel.push_back(sp.GetEnd().GetVelocity());
 	}
 	plt::plot(time, vel);
 	plt::show();
-	std::cout << vel[vel.size() - 2];
+	Setpoint* random = setpoints[0].FindSetpoint(setpoints[0].GetEnd().GetTime()).get();
+	float velo = random->GetVelocity();
+	float timeo = random->GetTime();
+	std::cout << velo << " " << timeo;
     return 0;
 }
 

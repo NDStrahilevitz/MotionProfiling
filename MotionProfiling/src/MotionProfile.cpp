@@ -4,12 +4,19 @@ MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const M
 	m_start(start), m_end(end), m_config(config) {
 }
 
-const std::forward_list<Setpoint>& MotionProfile::GetSetpoints() const {
-	return m_setpoints;
+const std::vector<MotionPart>& MotionProfile::GetParts() const {
+	return m_parts;
+}
+
+const Setpoint& MotionProfile::GetStart() const {
+	return m_start;
+}
+
+const Setpoint& MotionProfile::GetEnd() const {
+	return m_end;
 }
 
 void MotionProfile::Generate() {
-	m_setpoints.push_front(m_start);
 	float distCovered = 0;
 	float currTime = m_start.GetTime();
 	float goalDist = m_end.GetPos() - m_start.GetPos();
@@ -18,51 +25,32 @@ void MotionProfile::Generate() {
 	float deAccel = maxAcc;
 	float maxVel = sqrtf(goalDist*maxAcc);
 	float cruiseVel = fmin(maxVel, m_config.m_maxVel);	
-	float dt = m_config.m_dt; //sample time
-	float currVel = m_start.GetVelocity();	
+	float dt = m_config.m_dt; //sample time	
 	float deltaVStart = cruiseVel - m_start.GetVelocity();
 	float deltaVEnd = m_end.GetVelocity() - cruiseVel;
 	float accelTime = deltaVStart / maxAcc;
 	float accelDist = deltaVStart * accelTime / 2;
-	/*float deaccelTime = fabs(deltaVEnd / deAccel);
-	float deaccelDist = deltaVEnd * deaccelTime / 2;
-	float cruiseDist = goalDist - deaccelDist - accelDist;
-	float cruiseTime = cruiseDist / cruiseVel;*/
-	/*if (goalTime > cruiseTime + accelTime + deaccelTime) {
-		deAccel = fabs(deltaVEnd / (goalTime - (cruiseTime + accelTime)));
-		deaccelTime = deltaVEnd / deAccel;
-		deaccelDist = deltaVEnd * deaccelTime / 2;
-	}*/
-	while (currVel != cruiseVel) {
-		if (cruiseVel - currVel < maxAcc * dt) {
-			currVel = cruiseVel;
-		}
-		else {
-			currVel += maxAcc * dt;
-		}
-		currTime += dt;
-		distCovered += currVel * dt;
-		Setpoint newSetpoint(currTime, distCovered, currVel);
-		m_setpoints.push_front(newSetpoint);
+	float cruiseDist = goalDist - 2 * accelDist;
+
+	float timeToCruise = m_start.GetTime() + accelTime;
+	float accelPos = m_start.GetPos() + accelDist;
+
+	Setpoint toCruise(timeToCruise, accelPos, cruiseVel);
+	m_parts.push_back(MotionPart(m_start, toCruise));
+
+	//triangular profile
+	if (cruiseDist == 0) {	
+		//Setpoint deAccel(toCruise.GetTime() + accelTime, toCruise.GetPos() + accelDist, 0);	
+		m_parts.push_back(MotionPart(toCruise, m_end));
 	}
-	while (distCovered < goalDist- accelDist) {
-		currTime += dt;
-		distCovered += currVel*dt;
-		Setpoint newSetpoint(currTime, distCovered, currVel);
-		m_setpoints.push_front(newSetpoint);
+	//trapezoidal
+	else {
+		float cruiseTime = cruiseDist / cruiseVel + timeToCruise; //this is time coordinate, not the time while cruising
+		float endCruisePos = cruiseDist + accelPos;
+		Setpoint cruiseEnd(cruiseTime, endCruisePos, cruiseVel);
+		m_parts.push_back(MotionPart(toCruise, cruiseEnd));
+		m_parts.push_back(MotionPart(cruiseEnd, m_end));
 	}
-	//now start deaccelerating
-	while (fabs(goalDist - distCovered) > m_config.m_tolerance) {
-		currTime += dt;
-		currVel -= deAccel * dt;
-		if (currVel <= m_end.GetVelocity())
-			break;
-		distCovered += currVel * dt;
-		Setpoint newSetpoint(currTime, distCovered, currVel);
-		m_setpoints.push_front(newSetpoint);
-	}
-	m_setpoints.push_front(m_end);
-	m_setpoints.reverse(); //reverse linked list so it will be in order
 }
 
 
