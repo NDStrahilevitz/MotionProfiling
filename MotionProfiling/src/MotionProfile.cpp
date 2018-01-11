@@ -1,27 +1,27 @@
 #include "../include/MotionProfile.h"
 
 MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config) :
-	_start(start), _end(end), _config(config) {
+	m_start(start), m_end(end), m_config(config) {
 }
 
 const std::forward_list<Setpoint>& MotionProfile::GetSetpoints() const {
-	return _setpoints;
+	return m_setpoints;
 }
 
 void MotionProfile::Generate() {
-	_setpoints.push_front(_start);
+	m_setpoints.push_front(m_start);
 	float distCovered = 0;
-	float currTime = _start.GetTime();
-	float goalDist = _end.GetDist();
-	float goalTime = _end.GetTime();
-	float maxAcc = _config._maxAcc;
+	float currTime = m_start.GetTime();
+	float goalDist = m_end.GetPos() - m_start.GetPos();
+	float goalTime = m_end.GetTime();
+	float maxAcc = m_config.m_maxAcc;
 	float deAccel = maxAcc;
 	float maxVel = sqrtf(goalDist*maxAcc);
-	float cruiseVel = fmin(maxVel, _config._maxVel);	
-	float dt = _config._dt; //sample time
-	float currVel = _start.GetVelocity();	
-	float deltaVStart = cruiseVel - _start.GetVelocity();
-	float deltaVEnd = _end.GetVelocity() - cruiseVel;
+	float cruiseVel = fmin(maxVel, m_config.m_maxVel);	
+	float dt = m_config.m_dt; //sample time
+	float currVel = m_start.GetVelocity();	
+	float deltaVStart = cruiseVel - m_start.GetVelocity();
+	float deltaVEnd = m_end.GetVelocity() - cruiseVel;
 	float accelTime = deltaVStart / maxAcc;
 	float accelDist = deltaVStart * accelTime / 2;
 	/*float deaccelTime = fabs(deltaVEnd / deAccel);
@@ -43,26 +43,26 @@ void MotionProfile::Generate() {
 		currTime += dt;
 		distCovered += currVel * dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_front(newSetpoint);
+		m_setpoints.push_front(newSetpoint);
 	}
 	while (distCovered < goalDist- accelDist) {
 		currTime += dt;
 		distCovered += currVel*dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_front(newSetpoint);
+		m_setpoints.push_front(newSetpoint);
 	}
 	//now start deaccelerating
-	while (fabs(goalDist - distCovered) > _config._tolerance) {
+	while (fabs(goalDist - distCovered) > m_config.m_tolerance) {
 		currTime += dt;
 		currVel -= deAccel * dt;
-		if (currVel <= _end.GetVelocity())
+		if (currVel <= m_end.GetVelocity())
 			break;
 		distCovered += currVel * dt;
 		Setpoint newSetpoint(currTime, distCovered, currVel);
-		_setpoints.push_front(newSetpoint);
+		m_setpoints.push_front(newSetpoint);
 	}
-	_setpoints.push_front(_end);
-	_setpoints.reverse(); //reverse linked list so it will be in order
+	m_setpoints.push_front(m_end);
+	m_setpoints.reverse(); //reverse linked list so it will be in order
 }
 
 

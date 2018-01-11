@@ -3,16 +3,16 @@
 
 
 Setpoint::Setpoint(float time, float dist, float velocity) :
-	_time(time), _dist(dist), _velocity(velocity) {}
+	m_time(time), m_pos(dist), m_velocity(velocity) {}
 
 const float Setpoint::GetTime() const{
-	return _time;
+	return m_time;
 }
 
-const float Setpoint::GetDist() const{
-	return _dist;
+const float Setpoint::GetPos() const{
+	return m_pos;
 }
 
 const float Setpoint::GetVelocity() const{
-	return _velocity;
+	return m_velocity;
 }

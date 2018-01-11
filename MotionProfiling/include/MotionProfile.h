@@ -2,23 +2,25 @@
 #include <vector>
 #include <forward_list>
 #include "Setpoint.h"
+#include "MotionPart.h"
 
 struct MotionProfileConfig {
-	const float _dt;
-	const float _maxAcc;
-	const float _maxVel;
-	const float _tolerance;
+	const float m_dt;
+	const float m_maxAcc;
+	const float m_maxVel;
+	const float m_tolerance;
 
 	MotionProfileConfig(float dt, float maxAcc, float maxVel, float tolerance) :
-		_dt(dt), _maxAcc(maxAcc), _maxVel(maxVel), _tolerance(tolerance) {}
+		m_dt(dt), m_maxAcc(maxAcc), m_maxVel(maxVel), m_tolerance(tolerance) {}
 };
 
 class MotionProfile
 {
 private:
-	MotionProfileConfig _config;
-	Setpoint _start, _end;
-	std::forward_list<Setpoint> _setpoints;
+	MotionProfileConfig m_config;
+	Setpoint m_start, m_end;
+	std::forward_list<Setpoint> m_setpoints;
+	
 	
 public:
 	const std::forward_list<Setpoint>& GetSetpoints() const;
