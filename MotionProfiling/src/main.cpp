@@ -7,21 +7,17 @@
 namespace plt = matplotlibcpp;
 /*
 TODO:
-1. improve cruise velocity decision
-2. correct generation for non zero start velocities
-3. check generation with non zero end velocity (after fixing 2)
+correct overshoot cases and find impossible profiles
 */
 int main()
 {
-	Setpoint start(0, 0, 5);
-	Setpoint end(2, 20, 0);
+	Setpoint start(0, 0, 4);
+	Setpoint end(0, 3, 9);
 	MotionProfile profile(start, end, MotionProfileConfig(0.02,	5, 10, 0.05));
 	profile.Generate();
 	std::vector<MotionPart> setpoints = profile.GetParts();
 	std::vector<float> time;
 	std::vector<float> vel;
-	time.reserve(200);
-	vel.reserve(200);
 	for each (MotionPart sp in setpoints)
 	{
 		time.push_back(sp.GetStart().GetTime());
@@ -29,12 +25,14 @@ int main()
 		vel.push_back(sp.GetStart().GetVelocity());
 		vel.push_back(sp.GetEnd().GetVelocity());
 	}
+	for (size_t i = 0; i < time.size(); i++)
+	{
+		std::cout << time[i] << " " << vel[i] << std::endl;
+	}
 	plt::plot(time, vel);
 	plt::show();
-	Setpoint* random = setpoints[0].FindSetpoint(setpoints[0].GetEnd().GetTime()).get();
-	float velo = random->GetVelocity();
-	float timeo = random->GetTime();
-	std::cout << velo << " " << timeo;
+	
+	
     return 0;
 }
 

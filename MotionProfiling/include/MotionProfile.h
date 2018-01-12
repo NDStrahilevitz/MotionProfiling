@@ -4,6 +4,10 @@
 #include "Setpoint.h"
 #include "MotionPart.h"
 
+/*
+Defines constraints for the the profile
+*/
+
 struct MotionProfileConfig {
 	const float m_dt;
 	const float m_maxAcc;
@@ -13,6 +17,11 @@ struct MotionProfileConfig {
 	MotionProfileConfig(float dt, float maxAcc, float maxVel, float tolerance) :
 		m_dt(dt), m_maxAcc(maxAcc), m_maxVel(maxVel), m_tolerance(tolerance) {}
 };
+
+/*
+Defines a time-optimal trapezoidal/triangular velocity to time function.
+as such the time of the end setpoint is ignored in calculations
+*/
 
 class MotionProfile
 {
