@@ -1,4 +1,4 @@
-#include "../include/MotionProfile.h"
+#include <MotionProfile.h>
 
 MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config) :
 	m_start(start), m_end(end), m_config(config) {
@@ -16,6 +16,14 @@ const Setpoint& MotionProfile::GetEnd() const {
 	return m_end;
 }
 
+std::unique_ptr<Setpoint> MotionProfile::GetSetpoint(float t) const {
+	for (std::size_t i = 0; i < m_parts.size(); ++i) {
+		auto s = m_parts.at(i).FindSetpoint(t);
+		if (s)
+			return s;
+	}
+	return nullptr;
+}
 
 /*
 while reading this function take note that time variables represent a coordinate and not the time to complete an action, which is called an interval.

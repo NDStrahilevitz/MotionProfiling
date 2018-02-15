@@ -137,7 +137,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include\numpy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include\numpy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,6 +175,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="include\Setpoint.h" />
+    <ClInclude Include="include\Vec2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MotionPart.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="src\Setpoint.cpp" />
+    <ClCompile Include="src\Vec2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

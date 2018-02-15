@@ -1,4 +1,4 @@
-#include "../include/MotionPart.h"
+#include <MotionPart.h>
 
 MotionPart::MotionPart(const Setpoint& start, const Setpoint& end) : m_start(start), m_end(end), 
 m_distance(m_end.GetPos() - m_start.GetPos()), m_time(m_end.GetTime() - m_start.GetTime()), 
@@ -27,7 +27,7 @@ const Setpoint& MotionPart::GetEnd() const {
 	return m_end;
 }
 
-const std::unique_ptr<Setpoint>& MotionPart::FindSetpoint(float t) const {
+std::unique_ptr<Setpoint> MotionPart::FindSetpoint(float t) const {
 	if (ContainsTime(t)) {
 		float dt = t - m_start.GetTime();
 		float pos = m_start.GetPos() + (m_acc * dt * dt / 2);

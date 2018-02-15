@@ -9,11 +9,11 @@ namespace plt = matplotlibcpp;
 TODO:
 correct overshoot cases and find impossible profiles
 */
-int main()
-{
-	Setpoint start(0, 0, 4);
-	Setpoint end(0, 3, 9);
-	MotionProfile profile(start, end, MotionProfileConfig(0.02,	5, 10, 0.05));
+
+void  test_profiles() {
+	Setpoint start(0, 0, 0);
+	Setpoint end(0, 1, 0);
+	MotionProfile profile(start, end, MotionProfileConfig(0.02, 0.9, 3, 0.05));
 	profile.Generate();
 	std::vector<MotionPart> setpoints = profile.GetParts();
 	std::vector<float> time;
@@ -29,10 +29,16 @@ int main()
 	{
 		std::cout << time[i] << " " << vel[i] << std::endl;
 	}
+	std::cout << profile.GetSetpoint(1)->GetVelocity();
 	plt::plot(time, vel);
 	plt::show();
-	
-	
+}
+
+
+
+int main()
+{
+	test_profiles();
     return 0;
 }
 
