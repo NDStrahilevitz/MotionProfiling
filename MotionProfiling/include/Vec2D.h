@@ -8,20 +8,25 @@ public:
 	Vec2D();
 	Vec2D(double x, double y);
 
-	Vec2D& operator+=(const Vec2D& vc) {
-		m_x += vc.m_x;
-		m_y += vc.m_y;
-		
-		return *this;
+	Vec2D& operator+=(const Vec2D& vc);
+
+	Vec2D& operator*=(const double k);
+
+	friend Vec2D operator+(Vec2D lv, const Vec2D& rv) {
+		lv += rv;
+		return lv;
 	}
 
-	Vec2D& operator*=(const double k) {
-		m_x *= k;
-		m_y *= k;
+	friend Vec2D operator*(double k, Vec2D rv) {
+		rv *= k;
+		return rv;
+	}
 
-		return *this;
+	const bool operator==(const Vec2D& rh) {
+		return m_x == rh.m_x && m_y == rh.m_y;
 	}
 };
+
 
 
 
