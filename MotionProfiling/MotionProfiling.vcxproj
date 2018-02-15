@@ -173,12 +173,14 @@
     <ClInclude Include="include\MotionPart.h" />
     <ClInclude Include="include\MotionProfile.h" />
     <ClInclude Include="include\Spline.h" />
+    <ClInclude Include="include\Path.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="include\Setpoint.h" />
     <ClInclude Include="include\Vec2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Path.cpp" />
     <ClCompile Include="src\Spline.cpp" />
     <ClCompile Include="src\MotionPart.cpp" />
     <ClCompile Include="src\MotionProfile.cpp" />

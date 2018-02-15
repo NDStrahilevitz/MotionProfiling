@@ -4,6 +4,7 @@
 #include <forward_list>
 #include "../include/matplotlibcpp.h"
 #include "../include/MotionProfile.h"
+#include <Path.h>
 namespace plt = matplotlibcpp;
 /*
 TODO:
@@ -34,11 +35,27 @@ void  test_profiles() {
 	plt::show();
 }
 
-
+void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<double>& y) {
+	for (float i = 0; i <= 1; i+=0.02)
+	{
+		auto coords = s.GetPoint(i);
+		x.push_back(coords.GetX());
+		y.push_back(coords.GetY());
+	}
+}
 
 int main()
 {
-	test_profiles();
+	Path p({ {0,0},{3,3}, {5,3} });
+	GenerateCatmullRom(p);
+	std::vector<double> x, y;
+	auto splines = p.GetSplines();
+	for (size_t i = 0; i < splines.size(); i++)
+	{
+		push_back_coords(splines[i], x, y);
+	}
+	plt::plot(x, y);
+	plt::show();
     return 0;
 }
 
