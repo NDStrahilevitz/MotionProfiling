@@ -37,6 +37,9 @@ struct Point {
 
 	Point(const Vec2D& coords);
 	Point(const Vec2D& coords,const Vec2D& gradient);
+
+	const float GetHeading() const; //returns in radians
+	const float GetHeadingInDegrees() const; //returns in degrees
 };
 
 

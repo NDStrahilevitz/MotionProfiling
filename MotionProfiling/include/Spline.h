@@ -15,5 +15,6 @@ public:
 	Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1);
 
 	//get a 2d point on the spline
-	const Vec2D GetPoint(double t) const;
+	const Point GetPoint(double t) const;
+	const double GetLength() const;
 };
