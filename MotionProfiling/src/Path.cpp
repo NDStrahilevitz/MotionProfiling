@@ -5,12 +5,12 @@
 Path::Path(const std::vector<Vec2D>& waypoints) : m_waypoints({}), m_splines({}) {
 	m_waypoints.reserve(waypoints.size());
 	for (size_t i = 0; i < waypoints.size(); ++i) {
-		m_waypoints.emplace_back(Point(waypoints[i]));
+		m_waypoints.emplace_back(Waypoint(waypoints[i]));
 	}
 }
 
-const std::vector<Point> Path::GetCoords() const {
-	std::vector<Point> coords;
+const std::vector<Waypoint> Path::GetCoords() const {
+	std::vector<Waypoint> coords;
 	coords.reserve(200);
 
 	for (size_t i = 0; i < m_splines.size(); i++)
@@ -24,7 +24,7 @@ const std::vector<Point> Path::GetCoords() const {
 	return coords;
 }
 
-const std::vector<Point>& Path::GetWaypoints() const {
+const std::vector<Waypoint>& Path::GetWaypoints() const {
 	return m_waypoints;
 }
 

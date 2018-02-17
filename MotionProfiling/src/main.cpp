@@ -3,7 +3,7 @@
 
 #include <forward_list>
 #include "../include/matplotlibcpp.h"
-#include "../include/MotionProfile.h"
+#include <MotionProfile.h>
 #include <Path.h>
 namespace plt = matplotlibcpp;
 /*
@@ -46,8 +46,8 @@ void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<doubl
 
 int main()
 {
-	Path p({ {0,2}, {1,4},{5.7,8.3}, {7,7.6} });
-	GenerateCatmullRom(p);
+	Path p({ {0,0}, {1,3},{2,3}, {3,3}, {5,3 } });
+	GenerateCatmullRom(p,90,30);
 	auto coords = p.GetCoords();
 	std::vector<double> x, y;
 	x.reserve(coords.size());

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vec2D.h"
+#include "Waypoint.h"
 
 /*
 Spline defines a 2d parametric curve of a hermite cubic polynomial
@@ -15,6 +15,6 @@ public:
 	Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1);
 
 	//get a 2d point on the spline
-	const Point GetPoint(double t) const;
+	const Waypoint GetPoint(double t) const;
 	const double GetLength() const;
 };

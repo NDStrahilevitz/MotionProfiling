@@ -31,12 +31,12 @@ public:
 	}
 };
 
-struct Point {
+struct Waypoint {
 	Vec2D m_coords;
 	Vec2D m_gradient;
 
-	Point(const Vec2D& coords);
-	Point(const Vec2D& coords,const Vec2D& gradient);
+	Waypoint(const Vec2D& coords);
+	Waypoint(const Vec2D& coords,const Vec2D& gradient);
 
 	const float GetHeading() const; //returns in radians
 	const float GetHeadingInDegrees() const; //returns in degrees

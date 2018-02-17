@@ -4,7 +4,7 @@
 Spline::Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1) :
 	m_p0(p0), m_g0(g0), m_p1(p1), m_g1(g1) {}
 
-const Point Spline::GetPoint(double t) const {
+const Waypoint Spline::GetPoint(double t) const {
 	double tt = t * t;
 	double ttt = tt * t;
 
@@ -34,5 +34,5 @@ const double Spline::GetLength() const {
 		double dy = point.m_gradient.GetY();
 		length += sqrt((dx*dx) + (dy*dy));
 	}
-	return length/50;
+	return length/50;//divide by 50 because magic
 }

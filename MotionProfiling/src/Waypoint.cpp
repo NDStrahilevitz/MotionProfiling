@@ -1,4 +1,4 @@
-#include <Vec2D.h>
+#include <Waypoint.h>
 #define _USE_MATH_DEFINES
 #include <cmath>
 
@@ -25,13 +25,13 @@ Vec2D& Vec2D::operator*=(const double k) {
 	return *this;
 }
 
-Point::Point(const Vec2D& coords) : m_coords(coords), m_gradient({ 0,0 }) {}
-Point::Point(const Vec2D& coords, const Vec2D& gradient) : m_coords(coords), m_gradient(gradient) {}
+Waypoint::Waypoint(const Vec2D& coords) : m_coords(coords), m_gradient({ 0,0 }) {}
+Waypoint::Waypoint(const Vec2D& coords, const Vec2D& gradient) : m_coords(coords), m_gradient(gradient) {}
 
-const float Point::GetHeading() const {
+const float Waypoint::GetHeading() const {
 	return atan2(m_gradient.GetY(), m_gradient.GetX());
 }
 
-const float Point::GetHeadingInDegrees() const {
+const float Waypoint::GetHeadingInDegrees() const {
 	return 180/M_PI * atan2(m_gradient.GetY(), m_gradient.GetX());
 }

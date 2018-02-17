@@ -33,13 +33,13 @@
     <ClInclude Include="include\MotionPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Vec2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Spline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,13 +59,13 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vec2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Spline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
