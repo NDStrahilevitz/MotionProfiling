@@ -12,11 +12,7 @@ TODO:
 correct overshoot cases and find impossible profiles
 */
 
-void  test_profiles() {
-	Setpoint start(0);
-	Setpoint end(2);
-	MotionProfile profile(start, end, MotionProfileConfig(0.02, 1.5, 2.8, 0.05));
-	profile.Generate();
+void  test_profiles(const MotionProfile& profile) {
 	std::vector<MotionPart> setpoints = profile.GetParts();
 	std::vector<float> time;
 	std::vector<float> vel;
@@ -31,8 +27,21 @@ void  test_profiles() {
 	{
 		std::cout << time[i] << " " << vel[i] << std::endl;
 	}
-	std::cout << profile.GetSetpoint(0.02)->GetAcceleration() << '\n' << profile.GetSetpoint(2e-3)->GetVelocity();
+	std::cout << profile.GetEnd().GetPos();
 	plt::plot(time, vel);
+	plt::show();
+}
+
+void test_path(const Path& p) {
+	std::vector<double> x, y;
+	auto coords = p.GetCoords();
+	x.reserve(coords.size()); y.reserve(coords.size());
+	for (auto& point : coords) {
+		x.push_back(point.m_coords.GetX());
+		y.push_back(point.m_coords.GetY());
+	}
+
+	plt::plot(x, y);
 	plt::show();
 }
 
@@ -47,28 +56,17 @@ void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<doubl
 
 int main()
 {
-	Path p({ {0,0}, {1,3},{2,3}, {3,3}, {5,3 } });
-	GenerateCatmullRom(p,145,70);
-	auto coords = p.GetCoords();
-	std::vector<double> x, y;
-	x.reserve(coords.size());
-	y.reserve(coords.size());
-	for (size_t i = 0; i < coords.size(); i++)
-	{
-		x.push_back(coords[i].m_coords.GetX());
-		y.push_back(coords[i].m_coords.GetY());
-	}
-	std::cout << p.GetLength();
+	Path p({ {0,0}, {1,1} });
 	MotionProfileConfig config = { 1e-3, 1.5, 3, 0.02 };
-	Trajectory t(p, config);
-	for each(auto trajpoint in t.GetTrajPoints()) {
+	Trajectory t(p, config, 32, 90);
+	for each(auto& trajpoint in t.GetTrajPoints()) {
 		auto sp = trajpoint.m_sp;
 		auto wp = trajpoint.m_wp;
-		std::cout << sp.GetPos() << " " << sp.GetVelocity() << " " << sp.GetAcceleration() << wp.GetHeadingInDegrees();
+		std::cout << sp.GetTime() << " " << sp.GetPos() << " " << sp.GetVelocity() << " " 
+			<< sp.GetAcceleration() << " " << wp.GetHeadingInDegrees() << '\n';
 	}
-	plt::plot(x, y);
-	plt::show();
-	//test_profiles();
+	//test_profiles(t.GetProfile());
+	test_path(t.GetPath());
     return 0;
 }
 

@@ -36,11 +36,11 @@ const std::vector<Waypoint>& Path::GetWaypoints() const {
 
 const Waypoint Path::GetWaypoint(double d) {
 	double len = 0;
-	for each (auto spline in m_splines){
-		len += spline.GetLength();
+	for (auto& spline : m_splines) {
 		if (d >= len) {
-			return spline.GetPoint(d);
+			return spline.GetPointByDist(d - len);
 		}
+		len += spline.GetLength();
 	}
 }
 
@@ -49,7 +49,7 @@ void Path::AddSpline(const Spline& s) {
 }
 
 const double Path::GetLength() {
-	if (m_length < 0) {
+	if (m_length <= 0) {
 		double length = 0;
 		for each  (auto spline in m_splines)
 		{

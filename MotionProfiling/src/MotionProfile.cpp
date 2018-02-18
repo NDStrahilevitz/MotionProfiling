@@ -7,6 +7,9 @@ MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const M
 const std::vector<MotionPart>& MotionProfile::GetParts() const {
 	return m_parts;
 }
+void MotionProfile::AddPart(const MotionPart& part) {
+	m_parts.emplace_back(part);
+}
 
 const Setpoint& MotionProfile::GetStart() const {
 	return m_start;
@@ -17,16 +20,10 @@ const Setpoint& MotionProfile::GetEnd() const {
 }
 
 std::unique_ptr<Setpoint> MotionProfile::GetSetpoint(float t) const {
-	auto setpoint = m_setpointMap.find(t);
-	if (setpoint != m_setpointMap.end()) {
-		return std::make_unique<Setpoint>((*setpoint).second);
-	}
-	else {
-		for (std::size_t i = 0; i < m_parts.size(); ++i) {
-			auto s = m_parts.at(i).FindSetpoint(t);
-			if (s)
-				return s;
-		}
+	for (std::size_t i = 0; i < m_parts.size(); ++i) {
+		auto s = m_parts.at(i).FindSetpoint(t);
+		if (s)
+			return s;
 	}
 	return nullptr;
 }
@@ -79,13 +76,17 @@ void MotionProfile::Generate() {
 		Setpoint end(endTime, endPos, m_end.GetVelocity());
 		m_parts.push_back(MotionPart(cruiseEnd, end, m_config.m_dt));
 	}
-
-	for each (auto part in m_parts){
-		auto map = part.GetMap();
-		m_setpointMap.insert(map.begin(), map.end());
-	}
+	m_time = m_parts.at(m_parts.size() - 1).GetEnd().GetTime() - m_start.GetTime();
 }
 
+
+const double MotionProfile::GetDist() const {
+	return m_dist;
+}
+
+const double MotionProfile::GetTime() const {
+	return m_time;
+}
 
 
 

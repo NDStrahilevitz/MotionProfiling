@@ -29,14 +29,23 @@ private:
 	MotionProfileConfig m_config;
 	Setpoint m_start, m_end;
 	std::vector<MotionPart> m_parts;
-	std::unordered_map<float, Setpoint> m_setpointMap;
+
+	double m_dist;
+	double m_time;
 public:
 
 	const Setpoint& GetStart() const;
 	const Setpoint& GetEnd() const;
+
 	const std::vector<MotionPart>& GetParts() const;
+	void AddPart(const MotionPart& part);
 	std::unique_ptr<Setpoint> GetSetpoint(float t) const;
+
 	MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config);
+
 	void Generate();
+
+	const double GetDist() const;
+	const double GetTime() const;
 };
 

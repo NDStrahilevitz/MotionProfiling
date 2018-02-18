@@ -17,8 +17,7 @@ private:
 	const float m_time;
 	const float m_acc;
 	const float m_dt;
-	
-	std::unordered_map<float, Setpoint> m_setpointMap;
+
 public:
 	MotionPart(const Setpoint& start, const Setpoint& end);
 	MotionPart(const Setpoint& start, const Setpoint& end, float dt);
@@ -33,6 +32,4 @@ public:
 
 	//returns null if setpoint if time is not contained
 	std::unique_ptr<Setpoint> FindSetpoint(float t) const;
-
-	const std::unordered_map<float, Setpoint>& GetMap() const;
 };

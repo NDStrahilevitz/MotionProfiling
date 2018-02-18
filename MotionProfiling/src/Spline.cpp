@@ -59,10 +59,10 @@ const double Spline::GetLength() {
 			auto point = GetPoint(i);
 			double dx = point.m_gradient.GetX();
 			double dy = point.m_gradient.GetY();
-			length += sqrt((dx*dx) + (dy*dy));
-			m_waypointMap.insert({ length / 50, point });
+			length += sqrt((dx*dx) + (dy*dy)) * m_dt;
+			m_waypointMap.insert({ length, point });
 		}
-		m_length = length / 50;//divide by 50 because magic
+		m_length = length;
 	}
 	return m_length;
 }
