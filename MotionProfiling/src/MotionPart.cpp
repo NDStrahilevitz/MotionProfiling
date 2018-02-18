@@ -57,3 +57,7 @@ std::unique_ptr<Setpoint> MotionPart::FindSetpoint(float t) const {
 	}
 	return nullptr;
 }
+
+const std::unordered_map<float, Setpoint>& MotionPart::GetMap() const {
+	return m_setpointMap;
+}

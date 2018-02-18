@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <forward_list>
+#include <unordered_map>
 #include "Setpoint.h"
 #include "MotionPart.h"
 
@@ -29,7 +29,7 @@ private:
 	MotionProfileConfig m_config;
 	Setpoint m_start, m_end;
 	std::vector<MotionPart> m_parts;
-	
+	std::unordered_map<float, Setpoint> m_setpointMap;
 public:
 
 	const Setpoint& GetStart() const;
