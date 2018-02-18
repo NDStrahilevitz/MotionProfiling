@@ -42,7 +42,7 @@ const Waypoint Spline::GetPointByDist(double d) {
 			auto point = GetPoint(i);
 			double dx = point.m_gradient.GetX();
 			double dy = point.m_gradient.GetY();
-			length += sqrt((dx*dx) + (dy*dy));
+			length += sqrt((dx*dx) + (dy*dy)) * m_dt;
 			if(length >= d){
 				m_waypointMap.insert({ d, point });
 				return point;
