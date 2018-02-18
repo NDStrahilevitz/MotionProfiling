@@ -46,25 +46,25 @@ void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<doubl
 
 int main()
 {
-	//Path p({ {0,0}, {1,3},{2,3}, {3,3}, {5,3 } });
-	//GenerateCatmullRom(p,90,30);
-	//auto coords = p.GetCoords();
-	//std::vector<double> x, y;
-	//x.reserve(coords.size());
-	//y.reserve(coords.size());
-	//for (size_t i = 0; i < coords.size(); i++)
-	//{
-	//	x.push_back(coords[i].m_coords.GetX());
-	//	y.push_back(coords[i].m_coords.GetY());
-	//}
-	//for each (auto point in coords)
-	//{
-	//	std::cout << point.GetHeadingInDegrees() << '\n';
-	//}
-	//std::cout << p.GetLength();
-	//plt::plot(x, y);
-	//plt::show();
-	test_profiles();
+	Path p({ {0,0}, {1,3},{2,3}, {3,3}, {5,3 } });
+	GenerateCatmullRom(p,145,70);
+	auto coords = p.GetCoords();
+	std::vector<double> x, y;
+	x.reserve(coords.size());
+	y.reserve(coords.size());
+	for (size_t i = 0; i < coords.size(); i++)
+	{
+		x.push_back(coords[i].m_coords.GetX());
+		y.push_back(coords[i].m_coords.GetY());
+	}
+	for each (auto point in coords)
+	{
+		std::cout << point.GetHeadingInDegrees() << '\n';
+	}
+	std::cout << p.GetLength();
+	plt::plot(x, y);
+	plt::show();
+	//test_profiles();
     return 0;
 }
 
