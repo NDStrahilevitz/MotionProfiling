@@ -12,8 +12,8 @@ correct overshoot cases and find impossible profiles
 */
 
 void  test_profiles() {
-	Setpoint start(0, 0, 0);
-	Setpoint end(0, 2, 0);
+	Setpoint start(0);
+	Setpoint end(2);
 	MotionProfile profile(start, end, MotionProfileConfig(0.02, 1.5, 2.8, 0.05));
 	profile.Generate();
 	std::vector<MotionPart> setpoints = profile.GetParts();
@@ -30,7 +30,6 @@ void  test_profiles() {
 	{
 		std::cout << time[i] << " " << vel[i] << std::endl;
 	}
-	std::cout << profile.GetSetpoint(0.02)->GetVelocity();
 	plt::plot(time, vel);
 	plt::show();
 }
@@ -64,7 +63,6 @@ int main()
 	std::cout << p.GetLength();
 	plt::plot(x, y);
 	plt::show();
-	//test_profiles();
     return 0;
 }
 

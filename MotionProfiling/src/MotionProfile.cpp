@@ -71,8 +71,7 @@ void MotionProfile::Generate() {
 		float endPos = endCruisePos + decelDist;
 
 		Setpoint end(endTime, endPos, m_end.GetVelocity());
-		m_parts.push_back(MotionPart(cruiseEnd, end));
-		
+		m_parts.push_back(MotionPart(cruiseEnd, end));		
 	}
 }
 
