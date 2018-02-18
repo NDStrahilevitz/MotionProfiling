@@ -48,7 +48,7 @@ void MotionProfile::Generate() {
 	float accelPos = m_start.GetPos() + accelDist;
 
 	Setpoint toCruise(timeToCruise, accelPos, cruiseVel);
-	m_parts.push_back(MotionPart(m_start, toCruise));
+	m_parts.push_back(MotionPart(m_start, toCruise, m_config.m_dt));
 
 	//triangular profile
 	if (cruiseDist == 0) {	
@@ -56,7 +56,7 @@ void MotionProfile::Generate() {
 		float endPos = accelPos + decelDist;
 
 		Setpoint end(endTime, endPos, m_end.GetVelocity());
-		m_parts.push_back(MotionPart(toCruise, end));
+		m_parts.push_back(MotionPart(toCruise, end, m_config.m_dt));
 		
 	}
 	//trapezoidal
@@ -65,13 +65,13 @@ void MotionProfile::Generate() {
 		float cruiseTime = cruiseInterval + timeToCruise; 
 		float endCruisePos = cruiseDist + accelPos;
 		Setpoint cruiseEnd(cruiseTime, endCruisePos, cruiseVel);
-		m_parts.push_back(MotionPart(toCruise, cruiseEnd));
+		m_parts.push_back(MotionPart(toCruise, cruiseEnd, m_config.m_dt));
 
 		float endTime = cruiseTime + decelInterval;
 		float endPos = endCruisePos + decelDist;
 
 		Setpoint end(endTime, endPos, m_end.GetVelocity());
-		m_parts.push_back(MotionPart(cruiseEnd, end));		
+		m_parts.push_back(MotionPart(cruiseEnd, end, m_config.m_dt));
 	}
 }
 

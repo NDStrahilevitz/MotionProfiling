@@ -101,7 +101,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include\numpy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include\numpy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,6 +174,7 @@
     <ClInclude Include="include\MotionProfile.h" />
     <ClInclude Include="include\Spline.h" />
     <ClInclude Include="include\Path.h" />
+    <ClInclude Include="include\Trajectory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="include\Setpoint.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="src\MotionPart.cpp" />
     <ClCompile Include="src\MotionProfile.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Trajectory.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="src\Setpoint.cpp" />
     <ClCompile Include="src\Waypoint.cpp" />

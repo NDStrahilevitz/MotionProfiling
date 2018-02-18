@@ -2,8 +2,6 @@
 
 
 
-Trajectory::Trajectory()
-{
-}
+
 
 

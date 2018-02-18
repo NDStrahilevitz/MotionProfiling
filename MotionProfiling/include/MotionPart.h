@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include "Setpoint.h"
 
 /*
@@ -9,16 +10,18 @@
 
 class MotionPart {
 private:
-	
 	const Setpoint m_start;
 	const Setpoint m_end;
 	
 	const float m_distance;
 	const float m_time;
 	const float m_acc;
+	const float m_dt;
 	
+	std::unordered_map<float, Setpoint> m_setpointMap;
 public:
 	MotionPart(const Setpoint& start, const Setpoint& end);
+	MotionPart(const Setpoint& start, const Setpoint& end, float dt);
 
 	const bool IsValid() const;
 
