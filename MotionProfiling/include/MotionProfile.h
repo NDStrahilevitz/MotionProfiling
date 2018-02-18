@@ -9,12 +9,12 @@ Defines constraints for the the profile
 */
 
 struct MotionProfileConfig {
-	const float m_dt;
-	const float m_maxAcc;
-	const float m_maxVel;
-	const float m_tolerance;
+	const double m_dt;
+	const double m_maxAcc;
+	const double m_maxVel;
+	const double m_tolerance;
 
-	MotionProfileConfig(float dt, float maxAcc, float maxVel, float tolerance) :
+	MotionProfileConfig(double dt, double maxAcc, double maxVel, double tolerance) :
 		m_dt(dt), m_maxAcc(maxAcc), m_maxVel(maxVel), m_tolerance(tolerance) {}
 };
 

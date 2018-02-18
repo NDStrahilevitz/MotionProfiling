@@ -2,7 +2,13 @@
 #include <cmath>
 #include <Path.h>
 
-Path::Path(const std::vector<Vec2D>& waypoints) : m_waypoints({}), m_splines({}) {
+Path::Path(const std::vector<Vec2D>& waypoints) : m_waypoints({}), m_splines({}), m_length(-1), m_dt(1e-3) {
+	m_waypoints.reserve(waypoints.size());
+	for (size_t i = 0; i < waypoints.size(); ++i) {
+		m_waypoints.emplace_back(Waypoint(waypoints[i]));
+	}
+}
+Path::Path(const std::vector<Vec2D>& waypoints, double dt) : m_waypoints({}), m_splines({}), m_length(-1), m_dt(dt) {
 	m_waypoints.reserve(waypoints.size());
 	for (size_t i = 0; i < waypoints.size(); ++i) {
 		m_waypoints.emplace_back(Waypoint(waypoints[i]));
@@ -15,7 +21,7 @@ const std::vector<Waypoint> Path::GetCoords() const {
 
 	for (size_t i = 0; i < m_splines.size(); i++)
 	{
-		for (float j = 0; j <= 1; j+=0.02)
+		for (float j = 0; j <= 1; j+=m_dt)
 		{
 			coords.push_back(m_splines[i].GetPoint(j));
 		}
@@ -28,18 +34,31 @@ const std::vector<Waypoint>& Path::GetWaypoints() const {
 	return m_waypoints;
 }
 
+const Waypoint Path::GetWaypoint(double d) {
+	double len = 0;
+	for each (auto spline in m_splines){
+		len += spline.GetLength();
+		if (d >= len) {
+			return spline.GetPoint(d);
+		}
+	}
+}
+
 void Path::AddSpline(const Spline& s) {
 	m_splines.emplace_back(s);
 }
-const double Path::GetLength() const {
-	double length = 0;
-	for each  (auto spline in m_splines)
-	{
-		length += spline.GetLength();
-	}
-	return length;
-}
 
+const double Path::GetLength() {
+	if (m_length < 0) {
+		double length = 0;
+		for each  (auto spline in m_splines)
+		{
+			length += spline.GetLength();
+		}
+		m_length = length;
+	}
+	return m_length;
+}
 
 void GenerateCatmullRom(Path& p) {
 	auto points = p.GetWaypoints();
@@ -59,6 +78,8 @@ void GenerateCatmullRom(Path& p) {
 	{
 		p.AddSpline(Spline(points[i].m_coords, points[i].m_gradient, points[i + 1].m_coords, points[i + 1].m_gradient));
 	}
+
+	p.GetLength();
 }
 void GenerateCatmullRom(Path& p, float heading0) {
 	auto points = p.GetWaypoints();
@@ -80,6 +101,8 @@ void GenerateCatmullRom(Path& p, float heading0) {
 	{
 		p.AddSpline(Spline(points[i].m_coords, points[i].m_gradient, points[i + 1].m_coords, points[i + 1].m_gradient));
 	}
+
+	p.GetLength();
 }
 void GenerateCatmullRom(Path& p, float heading0, float headingf) {
 	auto points = p.GetWaypoints();
@@ -103,4 +126,6 @@ void GenerateCatmullRom(Path& p, float heading0, float headingf) {
 	{
 		p.AddSpline(Spline(points[i].m_coords, points[i].m_gradient, points[i + 1].m_coords, points[i + 1].m_gradient));
 	}
+
+	p.GetLength();
 }

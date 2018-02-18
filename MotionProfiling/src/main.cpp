@@ -5,6 +5,7 @@
 #include "../include/matplotlibcpp.h"
 #include <MotionProfile.h>
 #include <Path.h>
+#include <Trajectory.h>
 namespace plt = matplotlibcpp;
 /*
 TODO:
@@ -57,11 +58,14 @@ int main()
 		x.push_back(coords[i].m_coords.GetX());
 		y.push_back(coords[i].m_coords.GetY());
 	}
-	for each (auto point in coords)
-	{
-		std::cout << point.GetHeadingInDegrees() << '\n';
-	}
 	std::cout << p.GetLength();
+	MotionProfileConfig config = { 1e-3, 1.5, 3, 0.02 };
+	Trajectory t(p, config);
+	for each(auto trajpoint in t.GetTrajPoints()) {
+		auto sp = trajpoint.m_sp;
+		auto wp = trajpoint.m_wp;
+		std::cout << sp.GetPos() << " " << sp.GetVelocity() << " " << sp.GetAcceleration() << wp.GetHeadingInDegrees();
+	}
 	plt::plot(x, y);
 	plt::show();
 	//test_profiles();

@@ -2,7 +2,13 @@
 #include <cmath>
 
 Spline::Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1) :
-	m_p0(p0), m_g0(g0), m_p1(p1), m_g1(g1) {}
+	m_p0(p0), m_g0(g0), m_p1(p1), m_g1(g1), m_length(-1), m_dt(1e-3) {
+	GetLength();
+}
+Spline::Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1, double dt) :
+	m_p0(p0), m_g0(g0), m_p1(p1), m_g1(g1), m_length(-1), m_dt(dt) {
+	GetLength();
+}
 
 const Waypoint Spline::GetPoint(double t) const {
 	double tt = t * t;
@@ -25,14 +31,38 @@ const Waypoint Spline::GetPoint(double t) const {
 	return{ coords, gradient };
 }
 
-const double Spline::GetLength() const {
-	double length = 0;
-	for (double i = 0; i <= 1; i+=0.02)
-	{
-		auto point = GetPoint(i);
-		double dx = point.m_gradient.GetX();
-		double dy = point.m_gradient.GetY();
-		length += sqrt((dx*dx) + (dy*dy));
+const Waypoint Spline::GetPointByDist(double d) {
+	auto waypoint = m_waypointMap.find(d);
+	if (waypoint != m_waypointMap.end())
+		return (*waypoint).second;
+	else {
+		double length = 0;
+		for (double i = 0; i <= 1; i += m_dt)
+		{
+			auto point = GetPoint(i);
+			double dx = point.m_gradient.GetX();
+			double dy = point.m_gradient.GetY();
+			length += sqrt((dx*dx) + (dy*dy));
+			if(length >= d){
+				m_waypointMap.insert({ d, point });
+				return point;
+			}
+		}
 	}
-	return length/50;//divide by 50 because magic
+}
+
+const double Spline::GetLength() {
+	if (m_length < 0) {
+		double length = 0;
+		for (double i = 0; i <= 1; i += m_dt)
+		{
+			auto point = GetPoint(i);
+			double dx = point.m_gradient.GetX();
+			double dy = point.m_gradient.GetY();
+			length += sqrt((dx*dx) + (dy*dy));
+			m_waypointMap.insert({ length / 50, point });
+		}
+		m_length = length / 50;//divide by 50 because magic
+	}
+	return m_length;
 }
