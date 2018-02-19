@@ -32,7 +32,8 @@ private:
 
 	double m_dist;
 	double m_time;
-public:
+public:	
+	const MotionProfileConfig& GetConfig() const;
 
 	const Setpoint& GetStart() const;
 	const Setpoint& GetEnd() const;

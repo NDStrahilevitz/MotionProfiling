@@ -26,6 +26,7 @@ public:
 	Trajectory(Path& p, const MotionProfileConfig& config, float heading0, float headingf);
 
 	const std::vector<TrajPoint>& GetTrajPoints() const;
+	const TrajPoint GetTrajPoint(double t);
 
 	const MotionProfile& GetProfile() const;
 	const Path& GetPath() const;

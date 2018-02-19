@@ -6,19 +6,19 @@ Trajectory::Trajectory(Path& p, const MotionProfileConfig& config) : m_path(p), 
 	GenerateCatmullRom(m_path);
 	
 	InitTrajectory();
-	InitTrajPoints();
+	//InitTrajPoints();
 }
 Trajectory::Trajectory(Path& p, const MotionProfileConfig& config, float heading0) : m_path(p), m_config(config) {
 	GenerateCatmullRom(m_path, heading0);
 
 	InitTrajectory();
-	InitTrajPoints();
+	//InitTrajPoints();
 }
 Trajectory::Trajectory(Path& p, const MotionProfileConfig& config, float heading0, float headingf) : m_path(p), m_config(config) {
 	GenerateCatmullRom(m_path, heading0, headingf);
 
 	InitTrajectory();
-	InitTrajPoints();
+	//InitTrajPoints();
 }
 
 void Trajectory::InitTrajectory() {
@@ -44,6 +44,12 @@ void Trajectory::InitTrajPoints() {
 
 const std::vector<TrajPoint>& Trajectory::GetTrajPoints() const {
 	return m_trajPoints;
+}
+const TrajPoint Trajectory::GetTrajPoint(double t) {
+	auto sp = m_profile->GetSetpoint(t);
+	auto wp = m_path.GetWaypoint(sp->GetPos());
+	return TrajPoint(*sp, wp);
+
 }
 
 const MotionProfile& Trajectory::GetProfile() const {

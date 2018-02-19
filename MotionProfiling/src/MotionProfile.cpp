@@ -4,6 +4,10 @@ MotionProfile::MotionProfile(const Setpoint& start, const Setpoint& end, const M
 	m_start(start), m_end(end), m_config(config) {
 }
 
+const MotionProfileConfig& MotionProfile::GetConfig() const {
+	return m_config;
+}
+
 const std::vector<MotionPart>& MotionProfile::GetParts() const {
 	return m_parts;
 }
