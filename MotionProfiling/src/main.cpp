@@ -56,17 +56,17 @@ void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<doubl
 
 int main()
 {
-	Path p({ {0,0}, {1,1}, {3,2}, {4,2} });
+	Path p({ {0,0}, {0, 7} });
 	MotionProfileConfig config = { 1e-3, 1.5, 3, 0.02 };
-	Trajectory t(p, config, 32, 73);
-	for each(auto& trajpoint in t.GetTrajPoints()) {
+	Trajectory t(p, config, 0, 135);
+	/*for each(auto& trajpoint in t.GetTrajPoints()) {
 		auto sp = trajpoint.m_sp;
 		auto wp = trajpoint.m_wp;
 		std::cout << sp.GetTime() << " " << sp.GetPos() << " " << sp.GetVelocity() << " " 
 			<< sp.GetAcceleration() << " " << wp.GetHeadingInDegrees() << '\n';
-	}
-	//test_profiles(t.GetProfile());
+	}*/
 	test_path(t.GetPath());
+	test_profiles(t.GetProfile());
     return 0;
 }
 

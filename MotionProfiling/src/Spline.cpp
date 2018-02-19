@@ -32,21 +32,15 @@ const Waypoint Spline::GetPoint(double t) const {
 }
 
 const Waypoint Spline::GetPointByDist(double d) {
-	auto waypoint = m_waypointMap.find(d);
-	if (waypoint != m_waypointMap.end())
-		return (*waypoint).second;
-	else {
-		double length = 0;
-		for (double i = 0; i <= 1; i += m_dt)
-		{
-			auto point = GetPoint(i);
-			double dx = point.m_gradient.GetX();
-			double dy = point.m_gradient.GetY();
-			length += sqrt((dx*dx) + (dy*dy)) * m_dt;
-			if(length >= d){
-				m_waypointMap.insert({ d, point });
-				return point;
-			}
+	double length = 0;
+	for (double i = 0; i <= 1; i += m_dt)
+	{
+		auto point = GetPoint(i);
+		double dx = point.m_gradient.GetX();
+		double dy = point.m_gradient.GetY();
+		length += sqrt((dx*dx) + (dy*dy)) * m_dt;
+		if(length >= d){
+			return point;
 		}
 	}
 }
@@ -60,7 +54,6 @@ const double Spline::GetLength() {
 			double dx = point.m_gradient.GetX();
 			double dy = point.m_gradient.GetY();
 			length += sqrt((dx*dx) + (dy*dy)) * m_dt;
-			m_waypointMap.insert({ length, point });
 		}
 		m_length = length;
 	}

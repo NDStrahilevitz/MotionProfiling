@@ -14,7 +14,6 @@ private:
 	Vec2D m_p0, m_g0, m_p1, m_g1;
 	double m_dt;
 	double m_length;
-	std::unordered_map<double, Waypoint> m_waypointMap;
 public:
 	Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1);
 	Spline(Vec2D p0, Vec2D g0, Vec2D p1, Vec2D g1, double dt);
