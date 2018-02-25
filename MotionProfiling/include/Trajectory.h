@@ -14,19 +14,16 @@ struct TrajPoint {
 class Trajectory
 {
 private:
-	std::unique_ptr<MotionProfile> m_profile;
-	Path m_path;
 	MotionProfileConfig m_config;
+	Path m_path;
+	MotionProfile m_profile;
 	std::vector<TrajPoint> m_trajPoints;
-	void InitTrajectory();
-	void InitTrajPoints();
 public:
-	Trajectory(Path& p, const MotionProfileConfig& config);
-	Trajectory(Path& p, const MotionProfileConfig& config, float heading0);
-	Trajectory(Path& p, const MotionProfileConfig& config, float heading0, float headingf);
+	Trajectory(const MotionProfileConfig& config, Path& p);
 
 	const std::vector<TrajPoint>& GetTrajPoints() const;
-	const TrajPoint GetTrajPoint(double t);
+	const TrajPoint GetTrajPointT(double t); //get trajpoint in time
+	const TrajPoint GetTrajPointD(double d); //get trajpoint in space
 
 	const MotionProfile& GetProfile() const;
 	const Path& GetPath() const;

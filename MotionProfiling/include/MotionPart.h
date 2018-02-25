@@ -31,5 +31,6 @@ public:
 	const Setpoint& GetEnd() const;
 
 	//returns null if setpoint if time is not contained
-	std::unique_ptr<Setpoint> FindSetpoint(float t) const;
+	std::unique_ptr<Setpoint> FindSetpointT(float t) const; //find setpoint in time
+	std::unique_ptr<Setpoint> FindSetpointD(float d) const; //find setpoint in dist
 };

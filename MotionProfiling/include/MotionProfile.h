@@ -40,7 +40,8 @@ public:
 
 	const std::vector<MotionPart>& GetParts() const;
 	void AddPart(const MotionPart& part);
-	std::unique_ptr<Setpoint> GetSetpoint(float t) const;
+	std::unique_ptr<Setpoint> GetSetpointT(float t) const; //get setpoint through time
+	std::unique_ptr<Setpoint> GetSetpointD(float d) const; //get setpoint through distance
 
 	MotionProfile(const Setpoint& start, const Setpoint& end, const MotionProfileConfig& config);
 

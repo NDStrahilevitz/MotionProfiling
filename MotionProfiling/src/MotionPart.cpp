@@ -32,12 +32,23 @@ const Setpoint& MotionPart::GetEnd() const {
 	return m_end;
 }
 
-std::unique_ptr<Setpoint> MotionPart::FindSetpoint(float t) const {
+std::unique_ptr<Setpoint> MotionPart::FindSetpointT(float t) const {
 	if (ContainsTime(t)) {
 		float dt = t - m_start.GetTime();
 		float pos = m_start.GetPos() + (m_acc * dt * dt / 2) + m_start.GetVelocity() * dt;
 		float velocity = m_start.GetVelocity() + (m_acc * dt);
 		return std::make_unique<Setpoint>(t, pos, velocity, m_acc);
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Setpoint> MotionPart::FindSetpointD(float d) const {
+	if (ContainsPos(d)) {
+		float dPos = d - m_start.GetPos();
+		float vInitial2 = m_start.GetVelocity() * m_start.GetVelocity();
+		float vel = sqrtf(dPos*m_acc * 2 + vInitial2); //dx = (vf^2 - vi^2) / 2a
+		float time = 2 * dPos / (m_start.GetVelocity() + m_end.GetVelocity());
+		return std::make_unique<Setpoint>(time, d, vel, m_acc);
 	}
 	return nullptr;
 }

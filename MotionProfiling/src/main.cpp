@@ -54,11 +54,26 @@ void push_back_coords(const Spline& s, std::vector<double>& x, std::vector<doubl
 	}
 }
 
+void print_tp(const TrajPoint& tp) {
+	auto& sp = tp.m_sp;
+	auto& wp = tp.m_wp;
+
+	std::cout << sp.GetTime() << " " << sp.GetPos() << " " << sp.GetVelocity() << " " << sp.GetAcceleration() << " " << wp.GetHeadingInDegrees() << '\n';
+}
+
 int main()
 {
-	Path p({ {0,0}, {0, 7} });
+	Path p({ {0,0}, {0.8, 3}, {1.5, 3.8}, {2,4.5} });
+	GenerateCatmullRom(p,90,10);
 	MotionProfileConfig config = { 1e-3, 1.5, 3, 0.02 };
-	Trajectory t(p, config, 0, 135);
+	Trajectory t( config,p);
+
+	for (double i = 0; i <= t.GetProfile().GetDist(); i+= 1e-3)
+	{
+		auto& tp = t.GetTrajPointD(i);
+		print_tp(tp);
+	}
+
 	test_path(t.GetPath());
 	test_profiles(t.GetProfile());
     return 0;

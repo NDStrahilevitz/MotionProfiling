@@ -23,9 +23,18 @@ const Setpoint& MotionProfile::GetEnd() const {
 	return m_end;
 }
 
-std::unique_ptr<Setpoint> MotionProfile::GetSetpoint(float t) const {
+std::unique_ptr<Setpoint> MotionProfile::GetSetpointT(float t) const {
 	for (std::size_t i = 0; i < m_parts.size(); ++i) {
-		auto s = m_parts.at(i).FindSetpoint(t);
+		auto s = m_parts.at(i).FindSetpointT(t);
+		if (s)
+			return s;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Setpoint> MotionProfile::GetSetpointD(float d) const {
+	for (std::size_t i = 0; i < m_parts.size(); ++i) {
+		auto s = m_parts.at(i).FindSetpointD(d);
 		if (s)
 			return s;
 	}
@@ -81,6 +90,7 @@ void MotionProfile::Generate() {
 		m_parts.push_back(MotionPart(cruiseEnd, end, m_config.m_dt));
 	}
 	m_time = m_parts.at(m_parts.size() - 1).GetEnd().GetTime() - m_start.GetTime();
+	m_dist = m_parts.at(m_parts.size() - 1).GetEnd().GetPos() - m_start.GetPos();
 }
 
 
