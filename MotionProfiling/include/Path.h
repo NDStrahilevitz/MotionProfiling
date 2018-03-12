@@ -12,15 +12,18 @@ private:
 	double m_dt;
 
 public:
-	Path(const std::vector<Vec2D>& waypoints);
-	Path(const std::vector<Vec2D>& waypoints, double dt);
+	Path(const std::vector<Waypoint>& waypoints, double dt = 1e-3);
+	Path(const std::vector<Vec2D>& waypoints, double dt = 1e-3);
 
 	const std::vector<Waypoint> GetCoords() const;
 	const std::vector<Waypoint>& GetWaypoints() const;
 	
+	//get waypoint along a certain distance
 	const Waypoint GetWaypoint(double d);
 
-	void AddSpline(const Spline& s);
+	//generate the spline set according to the current waypoint values
+	void GenerateSplines();
+
 	const double GetLength();
 };
 
